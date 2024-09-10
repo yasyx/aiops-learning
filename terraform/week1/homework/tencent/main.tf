@@ -34,6 +34,17 @@ module "argocd" {
   repository = "https://argoproj.github.io/argo-helm"
 }
 
+# crossplan 安装
+module "crossplan" {
+    source = "../../../modules/helm"
+    kube_config = local_sensitive_file.kubeconfig.filename
+    name             = "crossplane"
+    repository       = "https://charts.crossplane.io/stable"
+    chart            = "crossplane"
+    namespace        = "crossplane-system"
+  
+}
+
 // 获取 kubeconfig
 resource "local_sensitive_file" "kubeconfig" {
   content  = module.k3s.kube_config
