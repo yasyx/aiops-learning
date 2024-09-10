@@ -28,7 +28,7 @@ data "tencentcloud_instance_types" "default" {
 
 # Create a web server
 resource "tencentcloud_instance" "web" {
-  instance_name              = "web server"
+  instance_name              = var.instance_name
   availability_zone          = data.tencentcloud_availability_zones_by_product.default.zones.0.name
   image_id                   = data.tencentcloud_images.default.images.0.image_id
   instance_type              = data.tencentcloud_instance_types.default.instance_types.0.instance_type
@@ -65,7 +65,7 @@ resource "tencentcloud_security_group_rule_set" "ssh" {
     action      = "ACCEPT"
     cidr_block  = "0.0.0.0/0"
     protocol    = "TCP"
-    port        = "80"
+    port        = "80,6443"
     description = "A:Allow Ips and 80"
   }
 

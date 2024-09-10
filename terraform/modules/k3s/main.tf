@@ -3,7 +3,7 @@ module "k3s" {
   k3s_version              = "v1.28.11+k3s2"
   generate_ca_certificates = true
   global_flags = [
-    "--tls-san ${var.private_ip}",
+    "--tls-san ${var.public_ip}",
     "--write-kubeconfig-mode 644",
     "--disable=traefik",
     "--kube-controller-manager-arg bind-address=0.0.0.0",
@@ -14,7 +14,7 @@ module "k3s" {
 
   servers = {
     "k3s" = {
-      ip = var.private_ip
+      ip = var.public_ip
       connection = {
         timeout     = "60s"
         type        = "ssh"

@@ -9,3 +9,8 @@ variable "memory_size" {
 variable "availability_zone" {
   default = "ap-guangzhou-6"
 }
+
+
+variable "instance_name" {
+  
+}
