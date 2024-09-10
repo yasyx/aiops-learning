@@ -1,19 +1,17 @@
-terraform {
-  required_providers {
-    tencentcloud = {
-      source  = "tencentcloudstack/tencentcloud"
-      version = "1.81.120"
-    }
-  }
-}
 
 # Configure the TencentCloud Provider
 provider "tencentcloud" {}
 
+module "vpc_subnet" {
+  source            = "../network"
+  availability_zone = data.tencentcloud_availability_zones_by_product.default.zones.0.name
+}
 
 # Get availability zones
 data "tencentcloud_availability_zones_by_product" "default" {
   product = "cvm"
+  include_unavailable = false
+  name = var.availability_zone
 }
 
 # Get availability images
@@ -24,8 +22,8 @@ data "tencentcloud_images" "default" {
 
 # Get availability instance types
 data "tencentcloud_instance_types" "default" {
-  cpu_core_count = 2
-  memory_size    = 2
+  cpu_core_count = var.cpu_core_count
+  memory_size    = var.memory_size
 }
 
 # Create a web server
@@ -42,7 +40,9 @@ resource "tencentcloud_instance" "web" {
   allocate_public_ip         = true
   internet_max_bandwidth_out = 20
   orderly_security_groups    = [tencentcloud_security_group.default.id]
-  password = "password123"
+  password                   = "password123"
+  vpc_id                     = module.vpc_subnet.vpc_id
+  subnet_id                  = module.vpc_subnet.subnet_id
 }
 
 # Create security group
@@ -68,4 +68,13 @@ resource "tencentcloud_security_group_rule_set" "ssh" {
     port        = "80"
     description = "A:Allow Ips and 80"
   }
+
+  egress {
+    action = "ACCEPT"
+    cidr_block = "0.0.0.0/0"
+    protocol    = "ALL"
+    port        = "ALL"
+    description = " ALLOW ALL"
+  }
+  
 }
