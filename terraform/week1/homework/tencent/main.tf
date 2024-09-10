@@ -1,3 +1,9 @@
+# 创建vpc 和 subnet
+module "network" {
+  source = "../../../modules/tecent/network"
+  availability_zone = var.availability_zone
+}
+
 // 创建腾讯云虚拟机 内存8G
 module "docker_cvm" {
   source      = "../../../modules/tecent/cvm"
@@ -5,6 +11,8 @@ module "docker_cvm" {
   cpu_core_count = var.cpu_core_count
   availability_zone = var.availability_zone
   instance_name = "docker-cvm"
+  subnet_id = module.network.subnet_id
+  vpc_id = module.network.vpc_id
 }
 
 module "k3s_cvm" {
@@ -13,6 +21,8 @@ module "k3s_cvm" {
   cpu_core_count = var.cpu_core_count
   availability_zone = var.availability_zone
   instance_name = "k3s-cvm"
+  subnet_id = module.network.subnet_id
+  vpc_id = module.network.vpc_id
 }
 
 # k3s 安装

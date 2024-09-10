@@ -7,7 +7,7 @@ variable "user" {
 }
 
 variable "availability_zone" {
-  default = "ap-guangzhou-7"
+  default = "ap-hongkong-3"
 }
 
 variable "cpu_core_count" {

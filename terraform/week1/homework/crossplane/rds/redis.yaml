@@ -1,0 +1,12 @@
+apiVersion: redis.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  name: my-redis-instance
+spec:
+  forProvider:
+  # The following values are placeholders and should be replaced with your actual Redis instance configuration
+    name: my-redis-instance
+    noAuth: true
+    memSize: 512
+    subnetId:
+    vpcId: vpc-3hww6kp5

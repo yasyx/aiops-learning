@@ -2,11 +2,6 @@
 # Configure the TencentCloud Provider
 provider "tencentcloud" {}
 
-module "vpc_subnet" {
-  source            = "../network"
-  availability_zone = data.tencentcloud_availability_zones_by_product.default.zones.0.name
-}
-
 # Get availability zones
 data "tencentcloud_availability_zones_by_product" "default" {
   product = "cvm"
@@ -41,8 +36,8 @@ resource "tencentcloud_instance" "web" {
   internet_max_bandwidth_out = 20
   orderly_security_groups    = [tencentcloud_security_group.default.id]
   password                   = "password123"
-  vpc_id                     = module.vpc_subnet.vpc_id
-  subnet_id                  = module.vpc_subnet.subnet_id
+  vpc_id                     = var.vpc_id
+  subnet_id                  = var.subnet_id
 }
 
 # Create security group
@@ -58,14 +53,7 @@ resource "tencentcloud_security_group_rule_set" "ssh" {
     action      = "ACCEPT"
     cidr_block  = "0.0.0.0/0"
     protocol    = "TCP"
-    port        = "22"
-    description = "A:Allow SSH port "
-  }
-  ingress {
-    action      = "ACCEPT"
-    cidr_block  = "0.0.0.0/0"
-    protocol    = "TCP"
-    port        = "80,6443"
+    port        = "22,80,443,6443"
     description = "A:Allow Ips and 80"
   }
 
