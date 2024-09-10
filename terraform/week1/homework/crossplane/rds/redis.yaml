@@ -8,5 +8,6 @@ spec:
     name: my-redis-instance
     noAuth: true
     memSize: 512
-    subnetId:
-    vpcId: vpc-3hww6kp5
+    subnetId: subnet-a6u7d0at
+    vpcId: vpc-qifph7tm
+    availabilityZone: ap-hongkong-3

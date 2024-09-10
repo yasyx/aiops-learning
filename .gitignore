@@ -36,3 +36,4 @@ override.tf.json
 .terraformrc
 terraform.rc
 .env
+terraform/week1/homework/tencent/config.yaml
