@@ -36,7 +36,6 @@ module "k3s" {
 
 # argocd 安装
 module "argocd" {
-  depends_on  = [module.k3s]
   source      = "../../../modules/helm"
   kube_config = local_sensitive_file.kubeconfig.filename
   name        = "argocd"
@@ -47,7 +46,6 @@ module "argocd" {
 
 # crossplan 安装
 module "crossplan" {
-  depends_on  = [module.k3s]
   source      = "../../../modules/helm"
   kube_config = local_sensitive_file.kubeconfig.filename
   name        = "crossplane"
