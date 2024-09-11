@@ -14,9 +14,9 @@ spec:
     port: 6379
     redisReplicasNum: 1
     redisShardNum: 1
-    subnetId: subnet-aktmp2nb
+    subnetId: subnet-qejwpsdn
     typeId: 15
-    vpcId: vpc-3xszxbcm
+    vpcId: vpc-qu1kcmrc
 
 
 
