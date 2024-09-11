@@ -1,13 +1,13 @@
 # 创建vpc 和 subnet
 module "network" {
-  source            = "../../../modules/tecent/network"
+  source            = "../../modules/tencent/network"
   availability_zone = var.availability_zone
 }
 
 // 创建腾讯云虚拟机 内存8G
 module "docker_cvm" {
   depends_on = [ module.network ]
-  source            = "../../../modules/tecent/cvm"
+  source            = "../../modules/tencent/cvm"
   memory_size       = var.memory_size
   cpu_core_count    = var.cpu_core_count
   availability_zone = var.availability_zone
@@ -18,7 +18,7 @@ module "docker_cvm" {
 
 module "k3s_cvm" {
   depends_on = [ module.network ]
-  source            = "../../../modules/tecent/cvm"
+  source            = "../../modules/tencent/cvm"
   memory_size       = var.memory_size
   cpu_core_count    = var.cpu_core_count
   availability_zone = var.availability_zone
@@ -30,7 +30,7 @@ module "k3s_cvm" {
 # k3s 安装
 module "k3s" {
   depends_on = [ module.k3s_cvm ]
-  source     = "../../../modules/k3s"
+  source     = "../../modules/k3s"
   user       = var.user
   password   = var.password
   public_ip  = module.k3s_cvm.public_ip
@@ -46,7 +46,7 @@ provider "helm" {
 # argocd 安装
 module "argocd" {
   depends_on = [ module.k3s ]
-  source      = "../../../modules/helm"
+  source      = "../../modules/helm"
   name        = "argocd"
   namespace   = "argocd"
   chart       = "argo-cd"
@@ -56,7 +56,7 @@ module "argocd" {
 # crossplan 安装
 module "crossplane" {
   depends_on = [ module.k3s ]
-  source      = "../../../modules/helm"
+  source      = "../../modules/helm"
   name        = "crossplane"
   repository  = "https://charts.crossplane.io/stable"
   chart       = "crossplane"
