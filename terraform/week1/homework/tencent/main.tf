@@ -29,6 +29,7 @@ module "k3s_cvm" {
 
 # k3s 安装
 module "k3s" {
+  depends_on = [ module.k3s_cvm ]
   source     = "../../../modules/k3s"
   user       = var.user
   password   = var.password
@@ -53,7 +54,7 @@ module "argocd" {
 }
 
 # crossplan 安装
-module "crossplan" {
+module "crossplane" {
   depends_on = [ module.k3s ]
   source      = "../../../modules/helm"
   name        = "crossplane"
@@ -71,6 +72,7 @@ resource "local_sensitive_file" "kubeconfig" {
 
 // 安装 Docker
 resource "terraform_data" "install_docker" {
+  depends_on = [ module.docker_cvm ]
   provisioner "file" {
     connection {
       password = var.password
