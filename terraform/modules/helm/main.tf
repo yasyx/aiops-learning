@@ -1,8 +1,3 @@
-provider "helm" {
-  kubernetes {
-    config_path = var.kube_config
-  }
-}
 
 resource "helm_release" "app" {
   name             = var.name

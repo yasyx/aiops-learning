@@ -6,6 +6,7 @@ module "network" {
 
 // 创建腾讯云虚拟机 内存8G
 module "docker_cvm" {
+  depends_on = [ module.network ]
   source            = "../../../modules/tecent/cvm"
   memory_size       = var.memory_size
   cpu_core_count    = var.cpu_core_count
@@ -16,6 +17,7 @@ module "docker_cvm" {
 }
 
 module "k3s_cvm" {
+  depends_on = [ module.network ]
   source            = "../../../modules/tecent/cvm"
   memory_size       = var.memory_size
   cpu_core_count    = var.cpu_core_count
@@ -34,10 +36,16 @@ module "k3s" {
   private_ip = module.k3s_cvm.private_ip
 }
 
+provider "helm" {
+  kubernetes {
+    config_path = local_sensitive_file.kubeconfig.filename
+  }
+}
+
 # argocd 安装
 module "argocd" {
+  depends_on = [ module.k3s ]
   source      = "../../../modules/helm"
-  kube_config = local_sensitive_file.kubeconfig.filename
   name        = "argocd"
   namespace   = "argocd"
   chart       = "argo-cd"
@@ -46,8 +54,8 @@ module "argocd" {
 
 # crossplan 安装
 module "crossplan" {
+  depends_on = [ module.k3s ]
   source      = "../../../modules/helm"
-  kube_config = local_sensitive_file.kubeconfig.filename
   name        = "crossplane"
   repository  = "https://charts.crossplane.io/stable"
   chart       = "crossplane"
