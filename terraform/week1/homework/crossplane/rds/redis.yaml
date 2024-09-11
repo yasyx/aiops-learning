@@ -5,7 +5,7 @@ metadata:
 spec:
   forProvider:
     availabilityZone: ap-hongkong-3
-    memSize: 512
+    memSize: 256
     name: terrform_test_redis
     passwordSecretRef:
       key: password
