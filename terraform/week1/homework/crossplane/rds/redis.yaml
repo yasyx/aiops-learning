@@ -1,13 +1,45 @@
 apiVersion: redis.tencentcloud.crossplane.io/v1alpha1
 kind: Instance
 metadata:
-  name: my-redis-instance
+  name: crossplane-redis
 spec:
   forProvider:
-  # The following values are placeholders and should be replaced with your actual Redis instance configuration
-    name: my-redis-instance
-    noAuth: true
-    memSize: 512
-    subnetId: subnet-a6u7d0at
-    vpcId: vpc-qifph7tm
     availabilityZone: ap-hongkong-3
+    memSize: 256
+    name: terrform_test_redis
+    passwordSecretRef:
+      key: password
+      name: example-redis-secret
+      namespace: crossplane-system
+    port: 6379
+    redisReplicasNum: 1
+    redisShardNum: 1
+    subnetId: subnet-aktmp2nb
+    typeId: 15
+    vpcId: vpc-3xszxbcm
+
+
+
+# apiVersion: redis.tencentcloud.crossplane.io/v1alpha1
+# kind: Instance
+# metadata:
+#   annotations:
+#     meta.upbound.io/example-id: redis/v1alpha1/instance
+#   labels:
+#     testing.upbound.io/example-name: foo
+#   name: crossplane-redis
+# spec:
+#   forProvider:
+#     availabilityZone: ${data.tencentcloud_redis_zone_config.zone.list[0].zone}
+#     memSize: 256
+#     name: terrform-test-redis
+#     passwordSecretRef:
+#       key: password
+#       name: example-redis-secret
+#       namespace: crossplane-system
+#     port: 6379
+#     redisReplicasNum: ${data.tencentcloud_redis_zone_config.zone.list[0].redis_replicas_nums[0]}
+#     redisShardNum: ${data.tencentcloud_redis_zone_config.zone.list[0].redis_shard_nums[0]}
+#     subnetId: ${tencentcloud_subnet.subnet.id}
+#     typeId: ${data.tencentcloud_redis_zone_config.zone.list[0].type_id}
+#     vpcId: ${tencentcloud_vpc.vpc.id}

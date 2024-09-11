@@ -1,5 +1,3 @@
-provider "tencentcloud" {}
-
 
 // create vpc
 resource "tencentcloud_vpc" "vpc" {

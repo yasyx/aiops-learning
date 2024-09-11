@@ -14,7 +14,7 @@ module "k3s" {
 
   servers = {
     "k3s" = {
-      ip = var.public_ip
+      ip = var.private_ip
       connection = {
         timeout     = "60s"
         type        = "ssh"

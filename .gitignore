@@ -37,3 +37,6 @@ override.tf.json
 terraform.rc
 .env
 terraform/week1/homework/tencent/config.yaml
+secret.yaml
+terraform/secret-redis.yaml
+terraform/secret-provider-config.yaml

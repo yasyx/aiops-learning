@@ -1,58 +1,60 @@
 # 创建vpc 和 subnet
 module "network" {
-  source = "../../../modules/tecent/network"
+  source            = "../../../modules/tecent/network"
   availability_zone = var.availability_zone
 }
 
 // 创建腾讯云虚拟机 内存8G
 module "docker_cvm" {
-  source      = "../../../modules/tecent/cvm"
-  memory_size = var.memory_size
-  cpu_core_count = var.cpu_core_count
+  source            = "../../../modules/tecent/cvm"
+  memory_size       = var.memory_size
+  cpu_core_count    = var.cpu_core_count
   availability_zone = var.availability_zone
-  instance_name = "docker-cvm"
-  subnet_id = module.network.subnet_id
-  vpc_id = module.network.vpc_id
+  instance_name     = "docker-cvm"
+  subnet_id         = module.network.subnet_id
+  vpc_id            = module.network.vpc_id
 }
 
 module "k3s_cvm" {
-  source      = "../../../modules/tecent/cvm"
-  memory_size = var.memory_size
-  cpu_core_count = var.cpu_core_count
+  source            = "../../../modules/tecent/cvm"
+  memory_size       = var.memory_size
+  cpu_core_count    = var.cpu_core_count
   availability_zone = var.availability_zone
-  instance_name = "k3s-cvm"
-  subnet_id = module.network.subnet_id
-  vpc_id = module.network.vpc_id
+  instance_name     = "k3s-cvm"
+  subnet_id         = module.network.subnet_id
+  vpc_id            = module.network.vpc_id
 }
 
 # k3s 安装
 module "k3s" {
-  source = "../../../modules/k3s"
-  user = var.user
-  password = var.password
-  public_ip = module.k3s_cvm.public_ip
+  source     = "../../../modules/k3s"
+  user       = var.user
+  password   = var.password
+  public_ip  = module.k3s_cvm.public_ip
   private_ip = module.k3s_cvm.private_ip
 }
 
 # argocd 安装
 module "argocd" {
-  source = "../../../modules/helm"
+  depends_on  = [module.k3s]
+  source      = "../../../modules/helm"
   kube_config = local_sensitive_file.kubeconfig.filename
-  name = "argocd"
-  namespace = "argocd"
-  chart = "argo-cd"
-  repository = "https://argoproj.github.io/argo-helm"
+  name        = "argocd"
+  namespace   = "argocd"
+  chart       = "argo-cd"
+  repository  = "https://argoproj.github.io/argo-helm"
 }
 
 # crossplan 安装
 module "crossplan" {
-    source = "../../../modules/helm"
-    kube_config = local_sensitive_file.kubeconfig.filename
-    name             = "crossplane"
-    repository       = "https://charts.crossplane.io/stable"
-    chart            = "crossplane"
-    namespace        = "crossplane-system"
-  
+  depends_on  = [module.k3s]
+  source      = "../../../modules/helm"
+  kube_config = local_sensitive_file.kubeconfig.filename
+  name        = "crossplane"
+  repository  = "https://charts.crossplane.io/stable"
+  chart       = "crossplane"
+  namespace   = "crossplane-system"
+
 }
 
 // 获取 kubeconfig

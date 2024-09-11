@@ -1,9 +1,9 @@
 variable "password" {
-  
+
 }
 
 variable "user" {
-  
+
 }
 
 variable "availability_zone" {

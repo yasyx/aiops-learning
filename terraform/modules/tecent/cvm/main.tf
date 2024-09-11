@@ -1,7 +1,4 @@
 
-# Configure the TencentCloud Provider
-provider "tencentcloud" {}
-
 # Get availability zones
 data "tencentcloud_availability_zones_by_product" "default" {
   product = "cvm"
