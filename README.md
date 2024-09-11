@@ -9,5 +9,8 @@ A repository of learning AIOps
   - export ALICLOUD_ACCESS_KEY_SECRET="jKNUAxxxx3kcmTAupBGE2U"
   - export ALICLOUD_DEFAULT_REGION="cn-beijing"
   - export TF_VAR_user="ubuntu"
-  - export TF_VAR_password="password123" 
+  - export TF_VAR_password="password123"
+- helm
+- terraform
+- kubectl
 
