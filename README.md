@@ -1,6 +1,6 @@
 # aiops-learning
 A repository of learning AIOps
-### requirements
+### week1-terraform requirements
 - environment variables
   - export TENCENTCLOUD_SECRET_ID="AKIDsb7Oxxxxxxxxxx4B3f17xWpPikW"
   - export TENCENTCLOUD_SECRET_KEY="cy4uVtHbxxxxxxxxku0xhDVZO"
