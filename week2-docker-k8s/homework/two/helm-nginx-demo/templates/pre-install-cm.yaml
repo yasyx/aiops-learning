@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    annotations:
+        "helm.sh/hook": pre-install
+        "helm.sh/hook-weight": "-5"
+        "helm.sh/hook-delete-policy": hook-failed
+    name: nginx-index
+data:
+    index.html: |
+        <html>
+        <body>
+            <h1>I am content generate by a pre install hook , I am also a configmap</h1>
+        </body>
+        </html>    
