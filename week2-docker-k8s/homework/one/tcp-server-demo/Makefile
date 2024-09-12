@@ -1,3 +1,5 @@
+image-build:
+	./scripts/image-build.sh
 
 starts: cleans server
 	chmod +x bin/server && ./bin/server
