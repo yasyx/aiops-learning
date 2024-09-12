@@ -8,10 +8,10 @@ startc: cleanc client
 all: cleanc cleans server client
 
 client:
-	go build -o bin/client cmd/client/tcp_client.go
+	CGO_ENABLED=0 go build -o bin/client cmd/client/tcp_client.go
 
 server:
-	go build -o bin/server cmd/server/tcp_server.go 
+	CGO_ENABLED=0 go build -o bin/server cmd/server/tcp_server.go 
 
 cleanc:
 	rm -rf bin/client
