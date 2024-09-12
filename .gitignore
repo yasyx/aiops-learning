@@ -39,3 +39,5 @@ terraform.rc
 .DS_Store
 secret-provider-config.yaml
 week1-terraform/.DS_Store
+week2-docker-k8s/homework/one/tcp-server-demo/bin/client
+week2-docker-k8s/homework/one/tcp-server-demo/bin/server
