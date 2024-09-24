@@ -1,0 +1,147 @@
+[
+    {
+        "label": "ChatOpenAI;",
+        "importPath": "langchain_openai",
+        "description": "langchain_openai",
+        "isExtraImport": true,
+        "detail": "langchain_openai",
+        "documentation": {}
+    },
+    {
+        "label": "HumanMessage;",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
+        "isExtraImport": true,
+        "detail": "langchain_core.messages",
+        "documentation": {}
+    },
+    {
+        "label": "BaseChatMessageHistory",
+        "importPath": "langchain_core.chat_history",
+        "description": "langchain_core.chat_history",
+        "isExtraImport": true,
+        "detail": "langchain_core.chat_history",
+        "documentation": {}
+    },
+    {
+        "label": "InMemoryChatMessageHistory",
+        "importPath": "langchain_core.chat_history",
+        "description": "langchain_core.chat_history",
+        "isExtraImport": true,
+        "detail": "langchain_core.chat_history",
+        "documentation": {}
+    },
+    {
+        "label": "RunnableWithMessageHistory;",
+        "importPath": "langchain_core.runnables.history",
+        "description": "langchain_core.runnables.history",
+        "isExtraImport": true,
+        "detail": "langchain_core.runnables.history",
+        "documentation": {}
+    },
+    {
+        "label": "ChatPromptTemplate",
+        "importPath": "langchain_core.prompts",
+        "description": "langchain_core.prompts",
+        "isExtraImport": true,
+        "detail": "langchain_core.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "MessagesPlaceholder;",
+        "importPath": "langchain_core.prompts",
+        "description": "langchain_core.prompts",
+        "isExtraImport": true,
+        "detail": "langchain_core.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv;",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "get_message_history",
+        "kind": 2,
+        "importPath": "week3-aiops-llm.homework.main",
+        "description": "week3-aiops-llm.homework.main",
+        "peekOfCode": "def get_message_history(session_id: str) -> BaseChatMessageHistory:\n    if session_id not in message_store:\n        message_store[session_id] = InMemoryChatMessageHistory()\n    return message_store[session_id]\nconfig = {\n    \"configurable\" : {\"session_id\": \"session_id_654782\"}\n}\nwith_msg_his =  RunnableWithMessageHistory(chain, get_message_history, input_messages_key=\"messages\");\nres = with_msg_his.invoke(\n    [HumanMessage(\"Hi, I am jim\"),],",
+        "detail": "week3-aiops-llm.homework.main",
+        "documentation": {}
+    },
+    {
+        "label": "promt",
+        "kind": 5,
+        "importPath": "week3-aiops-llm.homework.main",
+        "description": "week3-aiops-llm.homework.main",
+        "peekOfCode": "promt = ChatPromptTemplate.from_messages(\n    [\n        (\n            \"system\",\n            \"You are a helpful assistant. Answer all questions to the best of your ability in Chinese.\",\n        ),\n        MessagesPlaceholder(\"messages\"),\n    ]\n);\nmodel = ChatOpenAI(",
+        "detail": "week3-aiops-llm.homework.main",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "week3-aiops-llm.homework.main",
+        "description": "week3-aiops-llm.homework.main",
+        "peekOfCode": "model = ChatOpenAI(\n    model= \"gpt-4o-mini\"\n);\nchain = promt | model;\nmessage_store = {};\ndef get_message_history(session_id: str) -> BaseChatMessageHistory:\n    if session_id not in message_store:\n        message_store[session_id] = InMemoryChatMessageHistory()\n    return message_store[session_id]\nconfig = {",
+        "detail": "week3-aiops-llm.homework.main",
+        "documentation": {}
+    },
+    {
+        "label": "chain",
+        "kind": 5,
+        "importPath": "week3-aiops-llm.homework.main",
+        "description": "week3-aiops-llm.homework.main",
+        "peekOfCode": "chain = promt | model;\nmessage_store = {};\ndef get_message_history(session_id: str) -> BaseChatMessageHistory:\n    if session_id not in message_store:\n        message_store[session_id] = InMemoryChatMessageHistory()\n    return message_store[session_id]\nconfig = {\n    \"configurable\" : {\"session_id\": \"session_id_654782\"}\n}\nwith_msg_his =  RunnableWithMessageHistory(chain, get_message_history, input_messages_key=\"messages\");",
+        "detail": "week3-aiops-llm.homework.main",
+        "documentation": {}
+    },
+    {
+        "label": "message_store",
+        "kind": 5,
+        "importPath": "week3-aiops-llm.homework.main",
+        "description": "week3-aiops-llm.homework.main",
+        "peekOfCode": "message_store = {};\ndef get_message_history(session_id: str) -> BaseChatMessageHistory:\n    if session_id not in message_store:\n        message_store[session_id] = InMemoryChatMessageHistory()\n    return message_store[session_id]\nconfig = {\n    \"configurable\" : {\"session_id\": \"session_id_654782\"}\n}\nwith_msg_his =  RunnableWithMessageHistory(chain, get_message_history, input_messages_key=\"messages\");\nres = with_msg_his.invoke(",
+        "detail": "week3-aiops-llm.homework.main",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "kind": 5,
+        "importPath": "week3-aiops-llm.homework.main",
+        "description": "week3-aiops-llm.homework.main",
+        "peekOfCode": "config = {\n    \"configurable\" : {\"session_id\": \"session_id_654782\"}\n}\nwith_msg_his =  RunnableWithMessageHistory(chain, get_message_history, input_messages_key=\"messages\");\nres = with_msg_his.invoke(\n    [HumanMessage(\"Hi, I am jim\"),],\n    config=config,\n    );\nprint(res);\nres = with_msg_his.invoke(",
+        "detail": "week3-aiops-llm.homework.main",
+        "documentation": {}
+    },
+    {
+        "label": "with_msg_his",
+        "kind": 5,
+        "importPath": "week3-aiops-llm.homework.main",
+        "description": "week3-aiops-llm.homework.main",
+        "peekOfCode": "with_msg_his =  RunnableWithMessageHistory(chain, get_message_history, input_messages_key=\"messages\");\nres = with_msg_his.invoke(\n    [HumanMessage(\"Hi, I am jim\"),],\n    config=config,\n    );\nprint(res);\nres = with_msg_his.invoke(\n    [HumanMessage(\"What is my name?\"),],\n    config=config,\n    );",
+        "detail": "week3-aiops-llm.homework.main",
+        "documentation": {}
+    },
+    {
+        "label": "res",
+        "kind": 5,
+        "importPath": "week3-aiops-llm.homework.main",
+        "description": "week3-aiops-llm.homework.main",
+        "peekOfCode": "res = with_msg_his.invoke(\n    [HumanMessage(\"Hi, I am jim\"),],\n    config=config,\n    );\nprint(res);\nres = with_msg_his.invoke(\n    [HumanMessage(\"What is my name?\"),],\n    config=config,\n    );\nprint(res);",
+        "detail": "week3-aiops-llm.homework.main",
+        "documentation": {}
+    },
+    {
+        "label": "res",
+        "kind": 5,
+        "importPath": "week3-aiops-llm.homework.main",
+        "description": "week3-aiops-llm.homework.main",
+        "peekOfCode": "res = with_msg_his.invoke(\n    [HumanMessage(\"What is my name?\"),],\n    config=config,\n    );\nprint(res);",
+        "detail": "week3-aiops-llm.homework.main",
+        "documentation": {}
+    }
+]
