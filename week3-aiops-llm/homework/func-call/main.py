@@ -13,7 +13,7 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "You are an expert in the field of cloud-native technology, and you have an in-depth understanding of cloud-native related technologies. Please answer my question in {language}.",
+            "You are a k8s manager, you can help me manager k8s cluster. Please answer my question in {language}.",
         ),
         SystemMessage(content="This is an example conversation."),
         MessagesPlaceholder(variable_name="messages"),
@@ -40,33 +40,54 @@ msg_with_his = RunnableWithMessageHistory(
     input_messages_key="messages",
 )
 
-res= msg_with_his.invoke(
-    {
-        "messages": [
-            HumanMessage("What is my k8s version ? and show me the pod list."),
-        ],
-        "language": "Chinese",
-    },
-    config={"configurable": {"session_id": "session_id_654783"}},
-)
 
-tool_msgs = []
+def chat_with_tools(msgs: HumanMessage) -> any:
+    print(f"向ChatGPT发送消息：{msgs}")
+    
+    res= msg_with_his.invoke(
+        {
+            "messages": [
+                msgs,
+            ],
+            "language": "Chinese",
+        },
+        config={"configurable": {"session_id": "session_id_654783"}},
+    )
 
-if res.tool_calls :
-    for tool_call in res.tool_calls:
-        slected_tool = all_tools_map[tool_call["name"].lower()]
-        tool_msg = slected_tool.invoke(tool_call)
-        tool_msgs.append(tool_msg)
+    tool_msgs = []
+    # print(res.tool_calls)
+    if res.tool_calls :
+        for tool_call in res.tool_calls:
+            print(f"命中{tool_call["name"]}方法，其参数为：{tool_call["args"]},ID为：{tool_call["id"]}")
+            slected_tool = all_tools_map[tool_call["name"].lower()]
+            
+            tool_msg = slected_tool.invoke(tool_call)
+            tool_msgs.append(tool_msg)
 
 
-print(tool_msgs)
+    print(f"将tool类型的消息返回至LLM解析，其内容为：{tool_msgs}")
 
-res= msg_with_his.invoke(
-    {
-        "messages": tool_msgs,
-        "language": "Chinese",
-    },
-    config={"configurable": {"session_id": "session_id_654783"}},
-)
+    res= msg_with_his.invoke(
+        {
+            "messages": tool_msgs,
+            "language": "Chinese",
+        },
+        config={"configurable": {"session_id": "session_id_654783"}},
+    )
+    
+    return res
 
-print(res)
+
+# 帮我修改 gateway 的配置，vendor 修改为 alipay
+
+print(f"ChatGPT返回：{chat_with_tools(HumanMessage(content="帮我修改 gateway 的配置，vendor 修改为 alipay")).content}")
+
+print("================================================================")
+# 帮我重启 gateway 服务
+print(f"ChatGPT返回：{chat_with_tools(HumanMessage(content="帮我重启 gateway 服务")).content}")
+
+print("================================================================")
+# 帮我部署一个 deployment，镜像是 nginx
+print(f"ChatGPT返回：{chat_with_tools(HumanMessage(content="帮我部署一个 deployment，镜像是 nginx")).content}")
+
+
