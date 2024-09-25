@@ -16,7 +16,7 @@ def get_k8s_pods():
 def modify_config(service_name: str, key: str , value: str) -> str:
     """Implementation to modify Kubernetes config""" 
     
-    print("The Function [modify_config] was called!!!")
+    print("2. The Function [modify_config] was called!!!\n")
     
     return f"The config of {service_name} was modified, detail: modify the value of {key} to {value}"
    
@@ -24,7 +24,7 @@ def modify_config(service_name: str, key: str , value: str) -> str:
 def restart_service(service_name):
     """Implementation to restart a Kubernetes service"""
     
-    print("The Function [restart_service] was called!!!")  # Debugging purpose
+    print("2. The Function [restart_service] was called!!!\n")  # Debugging purpose
     
     return f"The service of {service_name} was restarted"
 
@@ -32,7 +32,7 @@ def restart_service(service_name):
 def apply_manifest(resouce_type: str, image: str):
     """Implementation to apply Kubernetes manifest"""
 
-    print("The Function [apply_manifest] was called!!!")  # Debugging purpose
+    print("2. The Function [apply_manifest] was called!!! \n")  # Debugging purpose
     
     return f"A new {resouce_type} manifest was applied with image: {image}"
     
