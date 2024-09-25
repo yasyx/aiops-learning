@@ -7,8 +7,9 @@ OPENAI_API_BASE=<you_openai_base_url>
 OPENAI_BASE_URL=<you_openai_base_url>
 ```
 
-- 执行如下命令
+- 在项目根目录执行如下命令
 ```python
+pip install -r week3-aiops-llm/requirements.txt
 
 python week3-aiops-llm/homework/func-call/main.py
 
